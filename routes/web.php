@@ -13,6 +13,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+//Aula 18
+Route::delete('products/{id}', 'ProductController@destroy')->name('destroy');
+Route::put('products/{id}', 'ProductController@update')->name('products.update');
+Route::post('/products', 'ProductController@store')->name('products.store');
+Route::get('/products/create', 'ProductController@create')->name('products.create');
+Route::get('/products/{id}/edit', 'ProductController@edit')->name('products.edit');
+//Aula 16, 17
+Route::get('/products/{id}', 'ProductController@show')->name('products.show');
+Route::get('/products', 'ProductController@index')->name('products.index');
+
+
 //Aula 14 - Grupos de Rotas
 
 /*
