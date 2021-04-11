@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel App
+                    Laravel App {{$id}}
                 </div>
 
                 <div class="links">
