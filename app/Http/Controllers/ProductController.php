@@ -17,7 +17,7 @@ class ProductController extends Controller
         //$this->middleware(['auth'])->only(['create','store']);
         //EXCETO em
 
-        $this->middleware(['auth'])->except(['index', 'show']);
+        // $this->middleware(['auth'])->except(['index', 'show']);
     }
     /**
      * Display a listing of the resource.
@@ -42,6 +42,7 @@ class ProductController extends Controller
     public function create()
     {
         //
+        return view('admin.pages.products.create');
     }
 
     /**
@@ -52,7 +53,29 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //Aula 35
+        $request->validate([
+            'name' => 'required|min:3|max:255',
+            'description' => 'nullable|min:3|max:10000',
+            'photo' => 'required|image'
+        ]);
+
+        dd("OK");
+        //Lembrar de configurar os locais de upload em config->filesystems.php e depois rodar o artisan
+        // php artisan storage:link
+
+        //dd($request->all());
+        //dd($request->only(['name', 'description']));
+        //dd($request->name);
+        //dd($request->has('name')); //valida se o campo existe
+        //dd($request->input('test', 'André'));
+        //dd($request->except('_token'));
+        if ($request->file('photo')->isValid()) {
+            //dd($request->photo->getClientOriginalName());
+            //dd($request->file('photo')->store('products'));
+            $nameFile = $request->name . '.' . $request->photo->extension();
+            dd($request->file('photo')->storeAs('products', $nameFile));
+        }
     }
 
     /**
@@ -75,6 +98,7 @@ class ProductController extends Controller
     public function edit($id)
     {
         //
+        return view('admin.pages.products.edit', compact('id'));
     }
 
     /**
@@ -87,6 +111,7 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         //
+        dd("Editando o produto: {$id}");
     }
 
     /**
