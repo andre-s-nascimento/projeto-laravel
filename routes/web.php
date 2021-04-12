@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+//Aula 50
+Route::any('products/search', 'ProductController@search')->name('products.search');
 //Aula 19
 Route::resource('products', 'ProductController');//->middleware(['auth']);
 

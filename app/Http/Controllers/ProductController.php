@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUpdateProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -58,7 +59,13 @@ class ProductController extends Controller
         //Aula 46
         $data = $request->only(['name', 'description', 'price']);
 
-        Product::create($data);
+        if ($request->hasFile('image') && $request->image->isValid()) {
+            $imagePath = $request->image->store('products');
+            $data['image'] = $imagePath;
+            //dd($request->image->store('products'));
+        }
+
+        $this->repository->create($data);
 
         return redirect()->route('products.index');
         // $product = new Product;
@@ -141,7 +148,21 @@ class ProductController extends Controller
         if (!$product = $this->repository->find($id)) {
             return redirect()->back();
         }
-        $product->update($request->all());
+
+        $data = $request->all();
+
+        if ($request->hasFile('image') && $request->image->isValid()) {
+
+            if ($product->image && Storage::exists($product->image)) {
+                Storage::delete($product->image);
+            }
+
+            $imagePath = $request->image->store('products');
+            $data['image'] = $imagePath;
+            //dd($request->image->store('products'));
+        }
+
+        $product->update($data);
 
         return redirect()->route('products.index');
         //dd("Atualizando o produto: {$id}");
@@ -155,13 +176,31 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $product = $this->repository->where('id', $id);
+        $product = $this->repository->where('id', $id)->first();
+        
         if (!$product) {
             return redirect()->back();
+        }
+
+        if ($product->image && Storage::exists($product->image)) {
+            Storage::delete($product->image);
         }
 
         $product->delete();
 
         return redirect()->route('products.index');
+    }
+    /**
+     * Search Products
+     */
+    public function search(Request $request)
+    {
+        $filters = $request->except('_token');
+        $products = $this->repository->search($request->filter);
+
+        return view('admin.pages.products.index', [
+            'products' => $products,
+            'filters' => $filters,
+        ]);
     }
 }
