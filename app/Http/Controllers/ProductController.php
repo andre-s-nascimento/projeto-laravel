@@ -32,7 +32,7 @@ class ProductController extends Controller
     {
         //
 
-        $products = Product::paginate();
+        $products = Product::paginate(10);
         return view('admin.pages.products.index', ['products' => $products]);
     }
 
@@ -131,11 +131,11 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param App\Http\Requests\StoreUpdateProductRequest
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreUpdateProductRequest $request, $id)
     {
         //
         if (!$product = $this->repository->find($id)) {
