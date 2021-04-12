@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//Aula 19
+Route::resource('products', 'ProductController');//->middleware(['auth']);
+
+/*
 
 //Aula 18
 Route::delete('products/{id}', 'ProductController@destroy')->name('destroy');
@@ -23,7 +27,7 @@ Route::get('/products/{id}/edit', 'ProductController@edit')->name('products.edit
 //Aula 16, 17
 Route::get('/products/{id}', 'ProductController@show')->name('products.show');
 Route::get('/products', 'ProductController@index')->name('products.index');
-
+*/
 
 //Aula 14 - Grupos de Rotas
 
