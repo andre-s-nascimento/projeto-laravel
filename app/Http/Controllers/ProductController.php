@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUpdateProductRequest;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -48,19 +49,21 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Requests\StoreUpdateProductRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUpdateProductRequest $request)
     {
-        //Aula 35
-        $request->validate([
-            'name' => 'required|min:3|max:255',
-            'description' => 'nullable|min:3|max:10000',
-            'photo' => 'required|image'
-        ]);
-
         dd("OK");
+
+        //Aula 35
+        // $request->validate([
+        //     'name' => 'required|min:3|max:255',
+        //     'description' => 'nullable|min:3|max:10000',
+        //     'photo' => 'required|image'
+        // ]);
+
+
         //Lembrar de configurar os locais de upload em config->filesystems.php e depois rodar o artisan
         // php artisan storage:link
 

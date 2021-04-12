@@ -17,8 +17,8 @@
     <form action="{{route('products.store')}}" method="post" enctype="multipart/form-data">
         {{-- <input type="text" name="_token" id="" value="{{csrf_token()}}"> --}}
         @csrf
-        <input type="text" name="name" placeholder="Nome:" id="">
-        <input type="text" name="description" placeholder="Descrição:" id="">
+        <input type="text" name="name" placeholder="Nome:" id="" value="{{old('name')}}">
+        <input type="text" name="description" placeholder="Descrição:" id="" value="{{old('description')}}">
         <input type="file" name="photo" id="">
         <button type="submit">Enviar</button>
     </form>
